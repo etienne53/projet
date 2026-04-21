@@ -1,39 +1,81 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<title>Projets BTS SIO</title>
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Projets BTS SIO | Etienne LE BOZEC</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <nav>
-<a href="index.html">Accueil</a>
-<a href="projets.html">Projets</a>
-<a href="certification.html">Certifications</a>
-<a href="apoclem.html">APOCLEM</a>
-<a href="contact.html">Contact</a>
+  <a href="index.html">Accueil</a>
+  <a href="projets.html">Projets</a>
+  <a href="certification.html">Certifications</a>
+  <a href="apoclem.html">APOCLEM</a>
+  <a href="contact.html">Contact</a>
 </nav>
 
 <div class="container">
+  <h1>💻 Projets E5 – BTS SIO</h1>
+  <p style="margin-bottom: 2rem;">Projets réalisés dans le cadre de l'épreuve E5 (Administration des systèmes et réseaux, développement).</p>
 
-<h1>💻 Projets E5</h1>
+  <div class="grid">
+    <!-- 1. Bibliothèque liturgique numérique -->
+    <div class="card">
+      <h3>📖 Bibliothèque liturgique numérique</h3>
+      <p><strong>Diocèse de Laval</strong> – Mise en place d’une plateforme web sécurisée de ressources liturgiques (missels, lectionnaires, partitions).</p>
+      <p>Technologies : WordPress / PHP, MySQL, recherche documentaire, gestion des droits d’accès.</p>
+      <span class="tech-badge">WordPress</span>
+      <span class="tech-badge">PHP/MySQL</span>
+      <span class="tech-badge">Gestion de contenu</span>
+    </div>
 
-<div class="card">
-<h2>GMAO</h2>
-Application de maintenance industrielle en C#
+    <!-- 2. XAMPP Explorer -->
+    <div class="card">
+      <h3>🐘 XAMPP Explorer</h3>
+      <p>Explorateur de fichiers type Windows, développé en PHP avec l’environnement <strong>XAMPP</strong>. Permet la navigation, l’upload, la gestion des permissions et la manipulation de fichiers sur le serveur local.</p>
+      <p>Technologies : PHP, JavaScript, HTML/CSS, Apache, MySQL (optionnel).</p>
+      <span class="tech-badge">PHP</span>
+      <span class="tech-badge">XAMPP</span>
+      <span class="tech-badge">JavaScript</span>
+      <span class="tech-badge">Apache</span>
+    </div>
+
+    <!-- 3. APOCLEM multi-plateformes (Symfony + WordPress + Wix) -->
+    <div class="card">
+      <h3>🎵 APOCLEM – Portail associatif</h3>
+      <p>Site web complet pour l'association de promotion des orgues de la cathédrale de Laval. Le projet intègre trois environnements :</p>
+      <ul>
+        <li><strong>WordPress</strong> : gestion de contenu (actualités, événements, galerie, documents).</li>
+        <li><strong>Symfony</strong> : développement sur mesure pour l’espace membres, les adhésions en ligne et le système de dons.</li>
+        <li><strong>Wix</strong> : page d’accueil vitrine et intégration de formulaires de contact.</li>
+      </ul>
+      <p>Technologies : WordPress (PHP/MySQL), Symfony 6 (Twig, Doctrine), Wix (drag & drop, API).</p>
+      <span class="tech-badge">WordPress</span>
+      <span class="tech-badge">Symfony</span>
+      <span class="tech-badge">Wix</span>
+      <span class="tech-badge">PHP/MySQL</span>
+    </div>
+  </div>
+
+  <!-- Compétences transversales -->
+  <div class="card" style="margin-top: 2rem;">
+    <h3>🎯 Compétences transversales mises en œuvre</h3>
+    <ul>
+      <li>Analyse du besoin et conception (cahier des charges, maquettes)</li>
+      <li>Développement back-end et front-end</li>
+      <li>Administration de bases de données (MySQL, PostgreSQL)</li>
+      <li>Gestion de versions (Git, GitHub)</li>
+      <li>Déploiement et hébergement (serveur local / mutualisé)</li>
+    </ul>
+  </div>
 </div>
 
-<div class="card">
-<h2>Django Explorer</h2>
-Explorateur de fichiers type Windows
-</div>
+<footer>
+  <p>© 2026 Etienne LE BOZEC – Portfolio BTS SIO SLAM</p>
+</footer>
 
-<div class="card">
-<h2>APOCLEM Symfony</h2>
-Site associatif avec gestion de contenu + dons
-</div>
-
-</div>
 </body>
 </html>
