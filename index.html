@@ -6,36 +6,78 @@
   <title>Etienne LE BOZEC | Portfolio BTS SIO</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* Positionnement des logos */
+    .logo-top-left {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      width: 80px;
+      z-index: 200;
+    }
+    .logo-top-right {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      width: 80px;
+      z-index: 200;
+    }
+    .logo-bottom-left {
+      position: absolute;
+      bottom: 20px;
+      left: 20px;
+      width: 80px;
+      z-index: 200;
+    }
+    /* Ajustement pour mobile : réduire la taille et les décaler */
+    @media (max-width: 700px) {
+      .logo-top-left, .logo-top-right, .logo-bottom-left {
+        width: 50px;
+      }
+      .logo-top-left { top: 10px; left: 10px; }
+      .logo-top-right { top: 10px; right: 10px; }
+      .logo-bottom-left { bottom: 10px; left: 10px; }
+    }
+  </style>
 </head>
 <body>
 
+<!-- Images positionnées -->
+<img src="image/diocèse_de_laval.jpg" alt="Diocèse de Laval" class="logo-top-left">
+<img src="image/apoclem.jpg" alt="APOCLEM" class="logo-top-right">
+<img src="image/Paroisse%20change.jpg" alt="Paroisse change" class="logo-bottom-left">
+
 <nav>
-  <a href="index.html" class="active">Accueil</a>
-  <a href="projets.html">Projets</a>
-  <a href="certification.html">Certifications</a>
-  <a href="apoclem.html">APOCLEM</a>
-  <a href="contact.html">Contact</a>
+  <a href="index.html" class="active"><i class="fas fa-home"></i> Accueil</a>
+  <a href="projets.html"><i class="fas fa-code"></i> Projets</a>
+  <a href="certification.html"><i class="fas fa-certificate"></i> Certifications</a>
+  <a href="apoclem.html"><i class="fas fa-music"></i> APOCLEM</a>
+  <a href="contact.html"><i class="fas fa-envelope"></i> Contact</a>
 </nav>
 
 <section class="hero">
   <h1>Etienne LE BOZEC</h1>
   <h2>BTS SIO option SLAM · Systèmes, Réseaux & Cybersécurité</h2>
   <p>Étudiant passionné par le développement, l’administration système et la protection des données.</p>
-  <a href="projets.html" class="cta">Découvrir mes projets →</a>
+  <a href="projets.html" class="cta">Découvrir mes projets <i class="fas fa-arrow-right"></i></a>
 </section>
 
 <div class="container">
   <div class="grid">
     <div class="card">
-      <h3>💻 Développement</h3>
+      <i class="fas fa-laptop-code" style="font-size: 2rem; color:#2c5f8a;"></i>
+      <h3>Développement</h3>
       <p>WordPress, Symfony, PHP, Python, JavaScript.</p>
     </div>
     <div class="card">
-      <h3>🔐 Cybersécurité & RGPD</h3>
+      <i class="fas fa-shield-alt" style="font-size: 2rem; color:#2c5f8a;"></i>
+      <h3>Cybersécurité & RGPD</h3>
       <p>Certifié ANSSI, CNIL, Cisco. Sensibilisation à la protection des données.</p>
     </div>
     <div class="card">
-      <h3>🌐 Infrastructures réseau</h3>
+      <i class="fas fa-network-wired" style="font-size: 2rem; color:#2c5f8a;"></i>
+      <h3>Infrastructures réseau</h3>
       <p>Configuration serveur (Apache/XAMPP), gestion DNS, hébergement.</p>
     </div>
   </div>
