@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Partitions – Bibliothèque liturgique</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<nav>
+  <a href="index.html">Accueil</a>
+  <a href="projets.html">Projets</a>
+  <a href="certification.html">Certifications</a>
+  <a href="apoclem.html">APOCLEM</a>
+  <a href="bibliotheque-liturgique-numerique.html">Biblio. liturgique</a>
+  <a href="partition.html" class="active">Partitions</a>
+  <a href="contact.html">Contact</a>
+</nav>
+<div class="container">
+  <h1>📚 Partitions classées</h1>
+  <div class="row">
+    <!-- Exemple de dossiers (à adapter selon votre arborescence réelle) -->
+    <div class="col-md-2 col-6 text-center mb-3">
+      <div class="folder" onclick="location.href='?folder=Messe'">📁<br>Messe</div>
+    </div>
+    <div class="col-md-2 col-6 text-center mb-3">
+      <div class="folder" onclick="location.href='?folder=Chants'">📁<br>Chants</div>
+    </div>
+    <div class="col-md-2 col-6 text-center mb-3">
+      <div class="folder" onclick="location.href='?folder=Psaumes'">📁<br>Psaumes</div>
+    </div>
+    <!-- Fichiers PDF (placeholders) -->
+    <div class="col-md-2 col-6 text-center mb-3">
+      <div class="file" onclick="window.open('partitions/messe_1.pdf')">📄<br>messe_1.pdf</div>
+    </div>
+    <div class="col-md-2 col-6 text-center mb-3">
+      <div class="file" onclick="window.open('partitions/alleluia.pdf')">📄<br>alleluia.pdf</div>
+    </div>
+  </div>
+  <p class="mt-4">Les fichiers sont à placer dans le dossier <code>/partitions/</code> de ce dépôt.</p>
+</div>
+<script>
+  // Simuler la navigation : si un paramètre ?folder= existe, afficher le contenu du sous-dossier
+  const urlParams = new URLSearchParams(window.location.search);
+  const folder = urlParams.get('folder');
+  if (folder) {
+    alert('Navigation vers le dossier : ' + folder + ' (à implémenter dynamiquement)');
+    // Ici vous pourriez recharger la page avec une liste de fichiers de ce dossier.
+  }
+</script>
+</body>
+</html>
