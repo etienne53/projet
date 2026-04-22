@@ -75,12 +75,11 @@
 </footer>
 
 <script>
-  // ==================== ARBORESCENCE COMPLÈTE ====================
+  // ==================== ARBORESCENCE CORRIGÉE ====================
   const tree = {
     name: "racine",
     type: "folder",
     children: [
-      { name: "Psaume", type: "folder", children: [] },
       {
         name: "Chants",
         type: "folder",
@@ -207,7 +206,7 @@
         ]
       },
       {
-        name: "Psaumes",
+        name: "Psaume",
         type: "folder",
         children: [
           {
@@ -246,7 +245,6 @@
     const container = document.getElementById("content");
     container.innerHTML = "";
 
-    // Breadcrumb
     const breadcrumbDiv = document.getElementById("breadcrumb");
     let breadcrumbHtml = "📁 ";
     for (let i = 0; i < currentPath.length; i++) {
@@ -259,7 +257,6 @@
     }
     breadcrumbDiv.innerHTML = breadcrumbHtml;
 
-    // Bouton retour
     if (currentPath.length > 1) {
       const backDiv = document.createElement("div");
       backDiv.className = "col-12 mb-3";
@@ -267,7 +264,6 @@
       container.appendChild(backDiv);
     }
 
-    // Affichage des enfants
     if (currentNode.children && currentNode.children.length > 0) {
       currentNode.children.forEach(child => {
         const col = document.createElement("div");
