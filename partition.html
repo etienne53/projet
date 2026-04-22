@@ -32,6 +32,17 @@
       border-left: 5px solid #2c5f8a;
       padding-left: 1rem;
     }
+    .breadcrumb {
+      background: #eef2ff;
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .breadcrumb:hover {
+      background: #d9e2ef;
+    }
     @media (max-width: 768px) {
       .col-md-2 { width: 45%; margin: 0 auto; }
       .folder, .file { font-size: 0.8rem; }
@@ -52,39 +63,9 @@
 
 <div class="container">
   <h1>📚 Partitions classées</h1>
-  <p>Accédez aux partitions par dossier ou directement aux fichiers PDF.</p>
-
-  <div class="row g-3">
-    <!-- Dossiers (exemples) -->
-    <div class="col-md-2 col-6 text-center mb-3">
-      <div class="folder" onclick="navigateFolder('Messe')">📁<br>Messe</div>
-    </div>
-    <div class="col-md-2 col-6 text-center mb-3">
-      <div class="folder" onclick="navigateFolder('Chants')">📁<br>Chants</div>
-    </div>
-    <div class="col-md-2 col-6 text-center mb-3">
-      <div class="folder" onclick="navigateFolder('Psaumes')">📁<br>Psaumes</div>
-    </div>
-    <div class="col-md-2 col-6 text-center mb-3">
-      <div class="folder" onclick="navigateFolder('Motets')">📁<br>Motets</div>
-    </div>
-
-    <!-- Fichiers PDF (remplacez par vos vrais fichiers dans le dossier /partitions/) -->
-    <div class="col-md-2 col-6 text-center mb-3">
-      <div class="file" onclick="openPDF('messe_1.pdf')">📄<br>messe_1.pdf</div>
-    </div>
-    <div class="col-md-2 col-6 text-center mb-3">
-      <div class="file" onclick="openPDF('alleluia.pdf')">📄<br>alleluia.pdf</div>
-    </div>
-    <div class="col-md-2 col-6 text-center mb-3">
-      <div class="file" onclick="openPDF('psaume_23.pdf')">📄<br>psaume_23.pdf</div>
-    </div>
-    <div class="col-md-2 col-6 text-center mb-3">
-      <div class="file" onclick="openPDF('ave_maria.pdf')">📄<br>ave_maria.pdf</div>
-    </div>
-  </div>
-
-  <p class="text-muted mt-4">📌 Les fichiers sont à placer dans le dossier <code>/partitions/</code> de ce dépôt. Les dossiers ci-dessus sont des exemples – dans une version dynamique (PHP), ils liraient le contenu réel du serveur.</p>
+  <div id="breadcrumb" class="breadcrumb">📁 Racine</div>
+  <div id="content" class="row g-3"></div>
+  <p class="text-muted mt-4">📌 Les fichiers PDF sont à placer dans le dossier <code>/partitions/</code> de ce dépôt. La navigation ci-dessous est interactive (démonstration statique).</p>
 </div>
 
 <footer>
@@ -92,19 +73,174 @@
 </footer>
 
 <script>
-  // Fonction pour naviguer vers un dossier (version statique : affiche une alerte)
-  // Dans une version dynamique (PHP), vous pourriez recharger la page avec ?folder=...
-  function navigateFolder(folder) {
-    // Pour une démonstration statique, on affiche une alerte
-    alert(`Navigation vers le dossier "${folder}" (fonctionnalité à implémenter côté serveur).`);
-    // En PHP, vous pourriez faire : window.location.href = 'partition.php?folder=' + encodeURIComponent(folder);
+  // ==================== ARBORESCENCE (adaptez selon vos vrais dossiers/fichiers) ====================
+  const tree = {
+    name: "racine",
+    type: "folder",
+    children: [
+      {
+        name: "Chants",
+        type: "folder",
+        children: [
+          {
+            name: "Gloria",
+            type: "folder",
+            children: [
+              { name: "gloria_1.pdf", type: "file" },
+              { name: "gloria_2.pdf", type: "file" }
+            ]
+          },
+          {
+            name: "Alleluia",
+            type: "folder",
+            children: [
+              { name: "alleluia_paques.pdf", type: "file" },
+              { name: "alleluia_temps_ordinaire.pdf", type: "file" }
+            ]
+          },
+          { name: "chant_entree.pdf", type: "file" },
+          { name: "chant_sortie.pdf", type: "file" }
+        ]
+      },
+      {
+        name: "Psaumes",
+        type: "folder",
+        children: [
+          {
+            name: "Psaume 23",
+            type: "folder",
+            children: [
+              { name: "psaume_23_1.pdf", type: "file" },
+              { name: "psaume_23_2.pdf", type: "file" }
+            ]
+          },
+          {
+            name: "Psaume 150",
+            type: "folder",
+            children: [
+              { name: "psaume_150.pdf", type: "file" }
+            ]
+          },
+          { name: "psaume_100.pdf", type: "file" }
+        ]
+      },
+      {
+        name: "Motets",
+        type: "folder",
+        children: [
+          { name: "ave_verum.pdf", type: "file" },
+          { name: "tantum_ergo.pdf", type: "file" }
+        ]
+      },
+      { name: "messe_1.pdf", type: "file" },
+      { name: "messe_2.pdf", type: "file" }
+    ]
+  };
+
+  // Chemin de base pour les fichiers PDF (dans le dossier /partitions/ du dépôt)
+  const BASE_PDF_URL = "/partitions/";
+
+  // État de navigation : pile des dossiers parcourus (chaque élément est un objet node)
+  let currentPath = [tree];
+
+  // Fonction pour afficher le contenu du dossier courant
+  function displayCurrentFolder() {
+    const currentNode = currentPath[currentPath.length - 1];
+    const container = document.getElementById("content");
+    container.innerHTML = "";
+
+    // Mise à jour du breadcrumb
+    const breadcrumbDiv = document.getElementById("breadcrumb");
+    let breadcrumbHtml = "📁 ";
+    for (let i = 0; i < currentPath.length; i++) {
+      const node = currentPath[i];
+      if (i === 0) {
+        breadcrumbHtml += `<span onclick="navigateToIndex(${i})">Racine</span>`;
+      } else {
+        breadcrumbHtml += ` / <span onclick="navigateToIndex(${i})">${node.name}</span>`;
+      }
+    }
+    breadcrumbDiv.innerHTML = breadcrumbHtml;
+
+    // Si on est à la racine, on n'affiche pas de bouton "retour"
+    if (currentPath.length > 1) {
+      const backButton = document.createElement("div");
+      backButton.className = "col-12 mb-3";
+      backButton.innerHTML = `<div class="folder" onclick="goBack()">📁 .. (dossier parent)</div>`;
+      container.appendChild(backButton);
+    }
+
+    // Afficher les sous-dossiers
+    if (currentNode.children) {
+      currentNode.children.forEach(child => {
+        const col = document.createElement("div");
+        col.className = "col-md-2 col-6 text-center mb-3";
+        if (child.type === "folder") {
+          col.innerHTML = `<div class="folder" onclick="navigateToFolder('${escapeJs(child.name)}')">📁<br>${escapeHtml(child.name)}</div>`;
+        } else {
+          // Pour un fichier, on suppose que le nom est exact (ex: "gloria_1.pdf")
+          col.innerHTML = `<div class="file" onclick="openPDF('${escapeJs(child.name)}')">📄<br>${escapeHtml(child.name)}</div>`;
+        }
+        container.appendChild(col);
+      });
+    } else {
+      container.innerHTML += '<div class="col-12">Dossier vide.</div>';
+    }
   }
 
-  // Ouvre un fichier PDF dans un nouvel onglet
-  function openPDF(filename) {
-    // Le fichier doit exister dans le dossier /partitions/ à la racine du dépôt
-    window.open(`/partitions/${filename}`, '_blank');
+  // Fonction pour naviguer vers un sous-dossier (par son nom)
+  function navigateToFolder(folderName) {
+    const currentNode = currentPath[currentPath.length - 1];
+    const found = currentNode.children.find(child => child.type === "folder" && child.name === folderName);
+    if (found) {
+      currentPath.push(found);
+      displayCurrentFolder();
+    } else {
+      alert(`Dossier "${folderName}" introuvable.`);
+    }
   }
+
+  // Naviguer vers un niveau de la breadcrumb (index dans currentPath)
+  function navigateToIndex(index) {
+    currentPath = currentPath.slice(0, index + 1);
+    displayCurrentFolder();
+  }
+
+  // Revenir au dossier parent
+  function goBack() {
+    if (currentPath.length > 1) {
+      currentPath.pop();
+      displayCurrentFolder();
+    }
+  }
+
+  // Ouvrir un fichier PDF (chemin relatif au dossier /partitions/)
+  function openPDF(filename) {
+    // On reconstruit le chemin complet en fonction de l'arborescence actuelle
+    let fullPath = BASE_PDF_URL;
+    // Si on est dans un sous-dossier, on ajoute les noms des dossiers parents (sauf la racine)
+    for (let i = 1; i < currentPath.length; i++) {
+      fullPath += currentPath[i].name + "/";
+    }
+    fullPath += filename;
+    window.open(fullPath, '_blank');
+  }
+
+  // Utilitaires
+  function escapeHtml(str) {
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+  function escapeJs(str) {
+    return str.replace(/'/g, "\\'");
+  }
+
+  // Initialisation
+  displayCurrentFolder();
 </script>
 
 </body>
