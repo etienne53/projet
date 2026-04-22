@@ -2,11 +2,44 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <title>Partitions – Bibliothèque liturgique</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partitions – Bibliothèque liturgique | Etienne LE BOZEC</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    /* Styles pour les dossiers et fichiers (inspirés de l'explorateur) */
+    .folder, .file {
+      background: white;
+      border-radius: 16px;
+      padding: 15px 5px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .folder:hover, .file:hover {
+      background: #eef2ff;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin: 1rem 0;
+      color: #1e3a5f;
+      border-left: 5px solid #2c5f8a;
+      padding-left: 1rem;
+    }
+    @media (max-width: 768px) {
+      .col-md-2 { width: 45%; margin: 0 auto; }
+      .folder, .file { font-size: 0.8rem; }
+    }
+  </style>
 </head>
 <body>
+
 <nav>
   <a href="index.html">Accueil</a>
   <a href="projets.html">Projets</a>
@@ -16,37 +49,63 @@
   <a href="partition.html" class="active">Partitions</a>
   <a href="contact.html">Contact</a>
 </nav>
+
 <div class="container">
   <h1>📚 Partitions classées</h1>
-  <div class="row">
-    <!-- Exemple de dossiers (à adapter selon votre arborescence réelle) -->
+  <p>Accédez aux partitions par dossier ou directement aux fichiers PDF.</p>
+
+  <div class="row g-3">
+    <!-- Dossiers (exemples) -->
     <div class="col-md-2 col-6 text-center mb-3">
-      <div class="folder" onclick="location.href='?folder=Messe'">📁<br>Messe</div>
+      <div class="folder" onclick="navigateFolder('Messe')">📁<br>Messe</div>
     </div>
     <div class="col-md-2 col-6 text-center mb-3">
-      <div class="folder" onclick="location.href='?folder=Chants'">📁<br>Chants</div>
+      <div class="folder" onclick="navigateFolder('Chants')">📁<br>Chants</div>
     </div>
     <div class="col-md-2 col-6 text-center mb-3">
-      <div class="folder" onclick="location.href='?folder=Psaumes'">📁<br>Psaumes</div>
-    </div>
-    <!-- Fichiers PDF (placeholders) -->
-    <div class="col-md-2 col-6 text-center mb-3">
-      <div class="file" onclick="window.open('partitions/messe_1.pdf')">📄<br>messe_1.pdf</div>
+      <div class="folder" onclick="navigateFolder('Psaumes')">📁<br>Psaumes</div>
     </div>
     <div class="col-md-2 col-6 text-center mb-3">
-      <div class="file" onclick="window.open('partitions/alleluia.pdf')">📄<br>alleluia.pdf</div>
+      <div class="folder" onclick="navigateFolder('Motets')">📁<br>Motets</div>
+    </div>
+
+    <!-- Fichiers PDF (remplacez par vos vrais fichiers dans le dossier /partitions/) -->
+    <div class="col-md-2 col-6 text-center mb-3">
+      <div class="file" onclick="openPDF('messe_1.pdf')">📄<br>messe_1.pdf</div>
+    </div>
+    <div class="col-md-2 col-6 text-center mb-3">
+      <div class="file" onclick="openPDF('alleluia.pdf')">📄<br>alleluia.pdf</div>
+    </div>
+    <div class="col-md-2 col-6 text-center mb-3">
+      <div class="file" onclick="openPDF('psaume_23.pdf')">📄<br>psaume_23.pdf</div>
+    </div>
+    <div class="col-md-2 col-6 text-center mb-3">
+      <div class="file" onclick="openPDF('ave_maria.pdf')">📄<br>ave_maria.pdf</div>
     </div>
   </div>
-  <p class="mt-4">Les fichiers sont à placer dans le dossier <code>/partitions/</code> de ce dépôt.</p>
+
+  <p class="text-muted mt-4">📌 Les fichiers sont à placer dans le dossier <code>/partitions/</code> de ce dépôt. Les dossiers ci-dessus sont des exemples – dans une version dynamique (PHP), ils liraient le contenu réel du serveur.</p>
 </div>
+
+<footer>
+  <p>© 2026 Etienne LE BOZEC – Projet Bibliothèque liturgique – Portfolio BTS SIO SLAM</p>
+</footer>
+
 <script>
-  // Simuler la navigation : si un paramètre ?folder= existe, afficher le contenu du sous-dossier
-  const urlParams = new URLSearchParams(window.location.search);
-  const folder = urlParams.get('folder');
-  if (folder) {
-    alert('Navigation vers le dossier : ' + folder + ' (à implémenter dynamiquement)');
-    // Ici vous pourriez recharger la page avec une liste de fichiers de ce dossier.
+  // Fonction pour naviguer vers un dossier (version statique : affiche une alerte)
+  // Dans une version dynamique (PHP), vous pourriez recharger la page avec ?folder=...
+  function navigateFolder(folder) {
+    // Pour une démonstration statique, on affiche une alerte
+    alert(`Navigation vers le dossier "${folder}" (fonctionnalité à implémenter côté serveur).`);
+    // En PHP, vous pourriez faire : window.location.href = 'partition.php?folder=' + encodeURIComponent(folder);
+  }
+
+  // Ouvre un fichier PDF dans un nouvel onglet
+  function openPDF(filename) {
+    // Le fichier doit exister dans le dossier /partitions/ à la racine du dépôt
+    window.open(`/partitions/${filename}`, '_blank');
   }
 </script>
+
 </body>
 </html>
