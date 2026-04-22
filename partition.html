@@ -75,7 +75,7 @@
 </footer>
 
 <script>
-  // ==================== ARBORESCENCE AVEC SOUS-DOSSIERS DANS CHANTS ====================
+  // ==================== ARBORESCENCE AVEC DOSSIER D CONTENANT DES FICHIERS ====================
   const tree = {
     name: "racine",
     type: "folder",
@@ -85,11 +85,35 @@
         name: "Chants",
         type: "folder",
         children: [
-          { name: "A", type: "folder", children: [] },
-          { name: "AL",type: "folder", childre:  [] },
+          {
+            name: "A",
+            type: "folder",
+            children: [
+              { name: "A7- gloire-au-christ-parole-éternelle.pdf", type: "file" },
+              { name: "A13-15- sur la terre et dans les cieux .pdf", type: "file" },
+              { name: "A14-28- Messe-de-Saint-Boniface.pdf", type: "file" },
+              { name: "A14-56- dieu-nous-a-tous-appeles.pdf", type: "file" }
+            ]
+          },
+          {
+            name: "AL",
+            type: "folder",
+            children: [
+              { name: "Agnus Mozart AL 145.pdf", type: "file" },
+              { name: "AL 10-01 - Messe SOLEIL DES NATIONS de Marcel Dazin.pdf", type: "file" },
+              { name: "AL 68-16- Messe de l'Emmanuel.pdf", type: "file" }
+            ]
+          },
           { name: "B", type: "folder", children: [] },
           { name: "C", type: "folder", children: [] },
-          { name: "D", type: "folder", children: [] },
+          {
+            name: "D",
+            type: "folder",
+            children: [
+              { name: "AIMEZ-VOUS-D-307.pdf", type: "file" },
+              { name: "D 44-80 - VOICI LE CORPS ET LE SANG DU SEIGNEUR - Marc Dannaud (VD2).pdf", type: "file" }
+            ]
+          },
           { name: "E", type: "folder", children: [] },
           { name: "EDIT", type: "folder", children: [] },
           { name: "F", type: "folder", children: [] },
