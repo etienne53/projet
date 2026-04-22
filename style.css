@@ -1,5 +1,5 @@
 /* Animations globales */
-img, .card, .btn, nav a {
+.logo-top-left, .logo-top-right, .logo-bottom-left, .card, .btn, nav a {
   transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
 }
 
@@ -32,6 +32,7 @@ img, .card, .btn, nav a {
 .btn:active {
   transform: scale(0.97);
 }
+
 /* ===== STYLE GLOBAL – INSPIRÉ DE WWW.APOCLEM.FR ===== */
 * {
   margin: 0;
@@ -41,7 +42,7 @@ img, .card, .btn, nav a {
 
 body {
   font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
-  background: #fefefe;  /* blanc cassé, comme apoclem.fr */
+  background: #fefefe;
   color: #1e293b;
   line-height: 1.5;
   scroll-behavior: smooth;
@@ -155,7 +156,6 @@ h2, h3 {
   padding: 1.5rem;
   margin: 1.2rem 0;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-  transition: 0.2s;
   border: 1px solid #eef2ff;
 }
 
@@ -212,6 +212,31 @@ footer a {
   text-decoration: none;
 }
 
+/* Positionnement des logos (modifié) */
+.logo-top-left {
+  position: absolute;
+  top: 5px;
+  left: 20px;
+  width: 80px;
+  z-index: 200;
+}
+
+.logo-top-right {
+  position: absolute;
+  top: 5px;
+  right: 20px;
+  width: 80px;
+  z-index: 200;
+}
+
+.logo-bottom-left {
+  position: absolute;
+  bottom: 40px;
+  left: 20px;
+  width: 80px;
+  z-index: 200;
+}
+
 /* Responsive */
 @media (max-width: 700px) {
   nav {
@@ -229,4 +254,10 @@ footer a {
   .grid {
     gap: 1rem;
   }
+  .logo-top-left, .logo-top-right, .logo-bottom-left {
+    width: 50px;
+  }
+  .logo-top-left { top: 5px; left: 10px; }
+  .logo-top-right { top: 5px; right: 10px; }
+  .logo-bottom-left { bottom: 40px; left: 10px; }
 }
