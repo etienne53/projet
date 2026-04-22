@@ -39,8 +39,11 @@
       display: inline-block;
       cursor: pointer;
     }
-    .breadcrumb:hover {
-      background: #d9e2ef;
+    .breadcrumb span {
+      cursor: pointer;
+    }
+    .breadcrumb span:hover {
+      text-decoration: underline;
     }
     @media (max-width: 768px) {
       .col-md-2 { width: 45%; margin: 0 auto; }
@@ -64,7 +67,7 @@
   <h1>📚 Partitions classées</h1>
   <div id="breadcrumb" class="breadcrumb">📁 Racine</div>
   <div id="content" class="row g-3"></div>
-  <p class="text-muted mt-4">📌 Les fichiers PDF sont à placer dans le dossier <code>/partitions/</code> de ce dépôt. La navigation ci-dessous est interactive.</p>
+  <p class="text-muted mt-4">📌 Les fichiers PDF sont à placer dans le dossier <code>/partitions/</code> de ce dépôt. Cliquez sur un dossier pour naviguer.</p>
 </div>
 
 <footer>
@@ -72,72 +75,58 @@
 </footer>
 
 <script>
-  // ==================== ARBORESCENCE CORRIGÉE (Chants non vide) ====================
+  // ==================== ARBORESCENCE AVEC SOUS-DOSSIERS DANS CHANTS ====================
   const tree = {
     name: "racine",
     type: "folder",
     children: [
-      {
-        name: "Messe",
-        type: "folder",
-        children: []   // vous pouvez ajouter des fichiers plus tard
-      },
+      { name: "Messe", type: "folder", children: [] },
       {
         name: "Chants",
         type: "folder",
         children: [
+          { name: "A", type: "folder", children: [] },
+          { name: "AL",type: "folder", childre:  [] },
+          { name: "B", type: "folder", children: [] },
+          { name: "C", type: "folder", children: [] },
+          { name: "D", type: "folder", children: [] },
+          { name: "E", type: "folder", children: [] },
+          { name: "EDIT", type: "folder", children: [] },
+          { name: "F", type: "folder", children: [] },
+          { name: "G", type: "folder", children: [] },
+          { name: "H", type: "folder", children: [] },
+          { name: "I", type: "folder", children: [] },
+          { name: "J", type: "folder", children: [] },
+          { name: "K", type: "folder", children: [] },
+          { name: "M", type: "folder", children: [] },
+          { name: "MESSE", type: "folder", children: [] },
+          { name: "N", type: "folder", children: [] },
+          { name: "O", type: "folder", children: [] },
+          { name: "P", type: "folder", children: [] },
+          { name: "R", type: "folder", children: [] },
           {
-            name: "Gloria",
+            name: "S",
             type: "folder",
             children: [
-              { name: "gloria_1.pdf", type: "file" },
-              { name: "gloria_2.pdf", type: "file" }
+              { name: "S", type: "folder", children: [] },
+              { name: "SM", type: "folder", children: [] }
             ]
           },
-          {
-            name: "Alleluia",
-            type: "folder",
-            children: [
-              { name: "alleluia_paques.pdf", type: "file" },
-              { name: "alleluia_temps_ordinaire.pdf", type: "file" }
-            ]
-          },
-          { name: "chant_entree.pdf", type: "file" },
-          { name: "chant_sortie.pdf", type: "file" }
+          { name: "T", type: "folder", children: [] },
+          { name: "U", type: "folder", children: [] },
+          { name: "V", type: "folder", children: [] },
+          { name: "W", type: "folder", children: [] },
+          { name: "X", type: "folder", children: [] },
+          { name: "XL", type: "folder", children: [] },
+          { name: "Y", type: "folder", children: [] }
         ]
       },
-      {
-        name: "Psaumes",
-        type: "folder",
-        children: [
-          {
-            name: "Psaume 23",
-            type: "folder",
-            children: [
-              { name: "psaume_23_1.pdf", type: "file" },
-              { name: "psaume_23_2.pdf", type: "file" }
-            ]
-          },
-          {
-            name: "Psaume 150",
-            type: "folder",
-            children: [
-              { name: "psaume_150.pdf", type: "file" }
-            ]
-          },
-          { name: "psaume_100.pdf", type: "file" }
-        ]
-      },
-      {
-        name: "Motets",
-        type: "folder",
-        children: [
-          { name: "ave_verum.pdf", type: "file" },
-          { name: "tantum_ergo.pdf", type: "file" }
-        ]
-      },
+      { name: "Psaumes", type: "folder", children: [] },
+      { name: "Motets", type: "folder", children: [] },
       { name: "messe_1.pdf", type: "file" },
-      { name: "messe_2.pdf", type: "file" }
+      { name: "alleluia.pdf", type: "file" },
+      { name: "psaume_23.pdf", type: "file" },
+      { name: "ave_maria.pdf", type: "file" }
     ]
   };
 
@@ -149,6 +138,7 @@
     const container = document.getElementById("content");
     container.innerHTML = "";
 
+    // Breadcrumb
     const breadcrumbDiv = document.getElementById("breadcrumb");
     let breadcrumbHtml = "📁 ";
     for (let i = 0; i < currentPath.length; i++) {
@@ -161,13 +151,15 @@
     }
     breadcrumbDiv.innerHTML = breadcrumbHtml;
 
+    // Bouton retour
     if (currentPath.length > 1) {
-      const backButton = document.createElement("div");
-      backButton.className = "col-12 mb-3";
-      backButton.innerHTML = `<div class="folder" onclick="goBack()">📁 .. (dossier parent)</div>`;
-      container.appendChild(backButton);
+      const backDiv = document.createElement("div");
+      backDiv.className = "col-12 mb-3";
+      backDiv.innerHTML = `<div class="folder" onclick="goBack()">📁 .. (dossier parent)</div>`;
+      container.appendChild(backDiv);
     }
 
+    // Affichage des enfants
     if (currentNode.children && currentNode.children.length > 0) {
       currentNode.children.forEach(child => {
         const col = document.createElement("div");
