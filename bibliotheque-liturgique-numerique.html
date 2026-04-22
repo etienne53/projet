@@ -36,9 +36,12 @@
       border: none;
       border-radius: 30px;
       padding: 6px 16px;
+      text-decoration: none;
+      color: white;
     }
     .btn-secondary:hover {
       background-color: #5a6268;
+      color: white;
     }
     .logo {
       height: 80px;
@@ -60,8 +63,8 @@
     </div>
     <div style="text-align: center;">
       <div>
-        <!-- Remplacez 'image/logos.jpg' par le chemin réel de votre logo -->
-        <img src="image/logos.jpg" alt="Logo Paroisse Saint Pierre de Changé" class="logo">
+        <!-- Logo de la Paroisse de Changé (le fichier existe dans le dossier image/) -->
+        <img src="image/Paroisse%20change.jpg" alt="Logo Paroisse Saint Pierre de Changé" class="logo">
       </div>
       <h1>Paroisse de Changé</h1>
     </div>
@@ -69,48 +72,31 @@
 
   <!-- Grille des dossiers et fichiers -->
   <div class="row g-3">
-    <!-- Exemples de dossiers (à personnaliser) -->
+    <!-- Dossiers -->
     <div class="col-md-2 col-6 text-center mb-3">
-      <div class="folder" onclick="navigateTo('documents')">
-        📁<br>documents
-      </div>
+      <div class="folder" onclick="navigateTo('documents')">📁<br>documents</div>
     </div>
     <div class="col-md-2 col-6 text-center mb-3">
-      <div class="folder" onclick="navigateTo('partitions')">
-        📁<br>partitions
-      </div>
+      <div class="folder" onclick="navigateTo('partitions')">📁<br>partitions</div>
     </div>
     <div class="col-md-2 col-6 text-center mb-3">
-      <div class="folder" onclick="navigateTo('photos')">
-        📁<br>photos
-      </div>
+      <div class="folder" onclick="navigateTo('photos')">📁<br>photos</div>
     </div>
     <div class="col-md-2 col-6 text-center mb-3">
-      <div class="folder" onclick="navigateTo('bulletins')">
-        📁<br>bulletins
-      </div>
+      <div class="folder" onclick="navigateTo('bulletins')">📁<br>bulletins</div>
     </div>
-
-    <!-- Exemples de fichiers -->
+    <!-- Fichiers -->
     <div class="col-md-2 col-6 text-center mb-3">
-      <div class="file" onclick="openFile('missel.pdf')">
-        📄<br>missel.pdf
-      </div>
+      <div class="file" onclick="openFile('missel.pdf')">📄<br>missel.pdf</div>
     </div>
     <div class="col-md-2 col-6 text-center mb-3">
-      <div class="file" onclick="openFile('lectures.pdf')">
-        📄<br>lectures.pdf
-      </div>
+      <div class="file" onclick="openFile('lectures.pdf')">📄<br>lectures.pdf</div>
     </div>
     <div class="col-md-2 col-6 text-center mb-3">
-      <div class="file" onclick="openFile('chant.mp3')">
-        📄<br>chant.mp3
-      </div>
+      <div class="file" onclick="openFile('chant.mp3')">📄<br>chant.mp3</div>
     </div>
     <div class="col-md-2 col-6 text-center mb-3">
-      <div class="file" onclick="openFile('guide.pdf')">
-        📄<br>guide.pdf
-      </div>
+      <div class="file" onclick="openFile('guide.pdf')">📄<br>guide.pdf</div>
     </div>
   </div>
 
@@ -118,25 +104,17 @@
 </div>
 
 <script>
-  // Fonctions de navigation (à adapter selon votre structure réelle)
   function navigateTo(path) {
-    // Exemple : redirige vers une page avec paramètre ou vers un sous-dossier
+    // Redirige vers la même page avec un paramètre (à adapter selon votre back-end)
     window.location.href = `?path=${encodeURIComponent(path)}`;
-    // Pour une démonstration statique, vous pouvez aussi afficher une alerte :
-    // alert(`Navigation vers : ${path}`);
   }
 
   function openFile(filename) {
-    // Ouvre le fichier dans un nouvel onglet (exemple : /partitions/missel.pdf)
-    // Adaptez le chemin de base selon votre serveur
+    // Ouvre le fichier dans un nouvel onglet (chemin à adapter)
     window.open(`/partitions/${filename}`, '_blank');
-    // Si vous voulez une alerte de démonstration :
-    // alert(`Ouverture du fichier : ${filename}`);
   }
 
-  // Petit console.log pour info
-  console.log("Explorateur Paroisse de Changé - version statique");
+  console.log("Explorateur Paroisse de Changé - avec logo personnalisé");
 </script>
-
 </body>
 </html>
