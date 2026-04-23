@@ -1,83 +1,343 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Drive API - Affichage de Fichiers</title>
-    <!-- Style CSS pour l'affichage des fichiers -->
-    <style>
-        .file-list { list-style: none; padding: 0; }
-        .file-list li { margin: 5px 0; padding: 8px; background-color: #f9f9f9; border-radius: 4px; }
-        .file-list a { text-decoration: none; color: #333; display: block; }
-        .file-list a:hover { background-color: #e9e9e9; }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Partitions – Bibliothèque liturgique | Etienne LE BOZEC</title>
+  <link rel="stylesheet" href="style.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    .folder, .file {
+      background: white;
+      border-radius: 16px;
+      padding: 15px 5px;
+      transition: all 0.2s ease;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+      text-align: center;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .folder:hover, .file:hover {
+      background: #eef2ff;
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 1.8rem;
+      margin: 1rem 0;
+      color: #1e3a5f;
+      border-left: 5px solid #2c5f8a;
+      padding-left: 1rem;
+      display: inline-block;
+      vertical-align: middle;
+    }
+    .logo-title {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+    }
+    .logo-title img {
+      height: 60px;
+      width: auto;
+    }
+    .breadcrumb {
+      background: #eef2ff;
+      padding: 0.5rem 1rem;
+      border-radius: 30px;
+      margin-bottom: 1.5rem;
+      display: inline-block;
+      cursor: pointer;
+    }
+    .breadcrumb span {
+      cursor: pointer;
+    }
+    .breadcrumb span:hover {
+      text-decoration: underline;
+    }
+    @media (max-width: 768px) {
+      .col-md-2 { width: 45%; margin: 0 auto; }
+      .folder, .file { font-size: 0.8rem; }
+      .logo-title img { height: 40px; }
+      h1 { font-size: 1.2rem; }
+    }
+  </style>
 </head>
 <body>
 
-<button id="auth-button" style="display: none;">Se connecter avec Google</button>
-<h2>Fichiers dans mon Drive</h2>
-<ul id="file-list" class="file-list"></ul>
+<nav>
+  <a href="index.html">Accueil</a>
+  <a href="projets.html">Projets</a>
+  <a href="certification.html">Certifications</a>
+  <a href="apoclem.html">APOCLEM</a>
+  <a href="bibliotheque-liturgique-numerique.html">Biblio. liturgique</a>
+  <a href="partition.html" class="active">Partitions</a>
+  <a href="contact.html">Contact</a>
+</nav>
 
-<!-- Chargement de l'API Google -->
-<script src="https://apis.google.com/js/api.js"></script>
+<div class="container">
+  <!-- En-tête avec logo et titre -->
+  <div class="logo-title">
+    <img src="image/diocèse_de_laval.jpg" alt="Diocèse de Laval">
+    <h1>Diocèse de LAVAL</h1>
+  </div>
+  <div id="breadcrumb" class="breadcrumb">📁 Racine</div>
+  <div id="content" class="row g-3 justify-content-center"></div>
+  <p class="text-muted mt-4">📌 Les fichiers PDF sont à placer dans le dossier <code>/partitions/</code> de ce dépôt. Cliquez sur un dossier pour naviguer.</p>
+</div>
+
+<footer>
+  <p>© 2026 Etienne LE BOZEC – Projet Bibliothèque liturgique – Portfolio BTS SIO SLAM</p>
+</footer>
+
 <script>
-    // Configuration (à remplacer par vos identifiants)
-    const API_KEY = 'VOTRE_CLE_API_ICI';  // À remplacer
-    const CLIENT_ID = 'VOTRE_CLIENT_ID_ICI.apps.googleusercontent.com'; // À remplacer
-    const SCOPES = 'https://www.googleapis.com/auth/drive.readonly'; // Droits de lecture seule
-    const DISCOVERY_DOCS = ['https://www.googleapis.com/discovery/v1/apis/drive/v3/rest'];
+  const tree = {
+    name: "racine",
+    type: "folder",
+    children: [
+      {
+        name: "Chants",
+        type: "folder",
+        children: [
+          {
+            name: "A",
+            type: "folder",
+            children: [
+              { name: "A7- gloire-au-christ-parole-éternelle.pdf", type: "file" },
+              { name: "A13-15- sur la terre et dans les cieux .pdf", type: "file" },
+              { name: "A14-28- Messe-de-Saint-Boniface.pdf", type: "file" },
+              { name: "A14-56- dieu-nous-a-tous-appeles.pdf", type: "file" }
+            ]
+          },
+          {
+            name: "AL",
+            type: "folder",
+            children: [
+              { name: "Agnus Mozart AL 145.pdf", type: "file" },
+              { name: "AL 10-01 - Messe SOLEIL DES NATIONS de Marcel Dazin.pdf", type: "file" },
+              { name: "AL 68-16- Messe de l'Emmanuel.pdf", type: "file" }
+            ]
+          },
+          {
+            name: "B",
+            type: "folder",
+            children: [
+              { name: "À Toi la Majesté B82-49 .pdf", type: "file" }
+            ]
+          },
+          {
+            name: "C",
+            type: "folder",
+            children: [
+              { name: "C 242-1 - GLOIRE A DIEU DANS LE CIEL (chant de louange) - D.Rimaud-J.Berthier (VD2).pdf", type: "file" }
+            ]
+          },
+          {
+            name: "D",
+            type: "folder",
+            children: [
+              { name: "AIMEZ-VOUS-D-307.pdf", type: "file" },
+              { name: "D 44-80 - VOICI LE CORPS ET LE SANG DU SEIGNEUR - Marc Dannaud (VD2).pdf", type: "file" }
+            ]
+          },
+          { name: "E", type: "folder", children: [] },
+          {
+            name: "EDIT",
+            type: "folder",
+            children: [
+              { name: "Notre Dieu s’est fait homme- EDIT15-56.pdf", type: "file" }
+            ]
+          },
+          { name: "F", type: "folder", children: [] },
+          { name: "G", type: "folder", children: [] },
+          { name: "H", type: "folder", children: [] },
+          {
+            name: "I",
+            type: "folder",
+            children: [
+              { name: "baptise_dans_la_lumiere_de_Jesus-I297.pdf", type: "file" },
+              { name: "exultet I 111-1.pdf", type: "file" },
+              { name: "I 52-51 criez de joie.pdf", type: "file" },
+              { name: "i-235-feu-nouveau.pdf", type: "file" },
+              { name: "Souvienstoi_de_Jesus_ChristI45.pdf", type: "file" }
+            ]
+          },
+          { name: "J", type: "folder", children: [] },
+          { name: "K", type: "folder", children: [] },
+          { name: "M", type: "folder", children: [] },
+          { name: "N", type: "folder", children: [] },
+          { name: "O", type: "folder", children: [] },
+          { name: "P", type: "folder", children: [] },
+          { name: "R", type: "folder", children: [] },
+          {
+            name: "S",
+            type: "folder",
+            children: [
+              { name: "S", type: "folder", children: [] },
+              {
+                name: "SM",
+                type: "folder",
+                children: [
+                  { name: "Christ-aujourd-hui-nous-appelle-accords-guitare-modifies.pdf", type: "file" }
+                ]
+              }
+            ]
+          },
+          {
+            name: "T",
+            type: "folder",
+            children: [
+              { name: "Peuple_de_lumiere (2).pdf", type: "file" }
+            ]
+          },
+          { name: "U", type: "folder", children: [] },
+          { name: "V", type: "folder", children: [] },
+          {
+            name: "W",
+            type: "folder",
+            children: [
+              { name: "W 12 bis-litanie des saints.pdf", type: "file" }
+            ]
+          },
+          { name: "X", type: "folder", children: [] },
+          { name: "XL", type: "folder", children: [] },
+          {
+            name: "Y",
+            type: "folder",
+            children: [
+              { name: "acclamez_le_seigneur-avec compression-Y 69-72.pdf", type: "file" }
+            ]
+          }
+        ]
+      },
+      {
+        name: "Psaume",
+        type: "folder",
+        children: [
+          {
+            name: "PU",
+            type: "folder",
+            children: [
+              { name: "Par Jésus Christ ton serviteur.pdf", type: "file" }
+            ]
+          },
+          {
+            name: "Z",
+            type: "folder",
+            children: [
+              { name: "Psaume 95 - Aujourd'hui, un sauveur nous est ne (Noel, messe de la nuit - ABC).pdf", type: "file" },
+              { name: "Psaume.jpeg", type: "file" },
+              { name: "psaume129.jpg", type: "file" },
+              { name: "Z 558 - Ps. 117 - ALLELUIA, PSAUME 117 - Elisabeth Baranger (VD2).pdf", type: "file" }
+            ]
+          },
+          { name: "ZL", type: "folder", children: [] }
+        ]
+      },
+      {
+        name: "MESSE",
+        type: "folder",
+        children: [
+          { name: "Messe de la Trinité .pdf", type: "file" },
+          { name: "Messe de Rangueil.pdf", type: "file" },
+          { name: "messe_signe_damour.pdf", type: "file" },
+          { name: "Messe-de-St-Lorenzo.pdf", type: "file" }
+        ]
+      }
+    ]
+  };
 
-    let tokenClient;
+  const BASE_PDF_URL = "/partitions/";
+  let currentPath = [tree];
 
-    function gapiLoaded() {
-        gapi.load('client', initializeGapiClient);
+  function displayCurrentFolder() {
+    const currentNode = currentPath[currentPath.length - 1];
+    const container = document.getElementById("content");
+    container.innerHTML = "";
+
+    const breadcrumbDiv = document.getElementById("breadcrumb");
+    let breadcrumbHtml = "📁 ";
+    for (let i = 0; i < currentPath.length; i++) {
+      const node = currentPath[i];
+      if (i === 0) {
+        breadcrumbHtml += `<span onclick="navigateToIndex(${i})">Racine</span>`;
+      } else {
+        breadcrumbHtml += ` / <span onclick="navigateToIndex(${i})">${escapeHtml(node.name)}</span>`;
+      }
+    }
+    breadcrumbDiv.innerHTML = breadcrumbHtml;
+
+    if (currentPath.length > 1) {
+      const backDiv = document.createElement("div");
+      backDiv.className = "col-12 mb-3";
+      backDiv.innerHTML = `<div class="folder" onclick="goBack()">📁 .. (dossier parent)</div>`;
+      container.appendChild(backDiv);
     }
 
-    async function initializeGapiClient() {
-        await gapi.client.init({
-            apiKey: API_KEY,
-            discoveryDocs: DISCOVERY_DOCS,
-        });
-        // Initialise l'OAuth 2.0 client après le chargement de gapi.client
-        tokenClient = google.accounts.oauth2.initTokenClient({
-            client_id: CLIENT_ID,
-            scope: SCOPES,
-            callback: '', // Défini plus tard
-        });
+    if (currentNode.children && currentNode.children.length > 0) {
+      currentNode.children.forEach(child => {
+        const col = document.createElement("div");
+        col.className = "col-md-2 col-6 text-center mb-3";
+        if (child.type === "folder") {
+          col.innerHTML = `<div class="folder" onclick="navigateToFolder('${escapeJs(child.name)}')">📁<br>${escapeHtml(child.name)}</div>`;
+        } else {
+          col.innerHTML = `<div class="file" onclick="openPDF('${escapeJs(child.name)}')">📄<br>${escapeHtml(child.name)}</div>`;
+        }
+        container.appendChild(col);
+      });
+    } else {
+      container.innerHTML += '<div class="col-12">Dossier vide.</div>';
     }
+  }
 
-    function listFiles() {
-        gapi.client.drive.files.list({
-            'pageSize': 10,
-            'fields': "nextPageToken, files(id, name, mimeType, webViewLink, webContentLink)",
-            'q': "'VOTRE_ID_DOSSIER' in parents" // Filtrer par dossier spécifique
-        }).then(function(response) {
-            const files = response.result.files;
-            const fileListElement = document.getElementById('file-list');
-            fileListElement.innerHTML = '';
-            if (files && files.length > 0) {
-                for (let i = 0; i < files.length; i++) {
-                    const file = files[i];
-                    const li = document.createElement('li');
-                    const link = document.createElement('a');
-                    link.href = file.webViewLink; // Lien vers la vue du fichier
-                    link.target = '_blank'; // Ouvre dans un nouvel onglet
-                    let fileName = file.name;
-                    if (file.mimeType === 'application/vnd.google-apps.folder') {
-                        fileName = '📁 ' + fileName; // Ajoute une icône pour les dossiers
-                    } else {
-                        fileName = '📄 ' + fileName; // Ajoute une icône pour les fichiers
-                    }
-                    link.textContent = fileName;
-                    li.appendChild(link);
-                    fileListElement.appendChild(li);
-                }
-            } else {
-                fileListElement.innerHTML = '<li>Aucun fichier trouvé.</li>';
-            }
-        });
+  function navigateToFolder(folderName) {
+    const currentNode = currentPath[currentPath.length - 1];
+    const found = currentNode.children.find(child => child.type === "folder" && child.name === folderName);
+    if (found) {
+      currentPath.push(found);
+      displayCurrentFolder();
+    } else {
+      alert(`Dossier "${folderName}" introuvable.`);
     }
+  }
+
+  function navigateToIndex(index) {
+    currentPath = currentPath.slice(0, index + 1);
+    displayCurrentFolder();
+  }
+
+  function goBack() {
+    if (currentPath.length > 1) {
+      currentPath.pop();
+      displayCurrentFolder();
+    }
+  }
+
+  function openPDF(filename) {
+    let fullPath = BASE_PDF_URL;
+    for (let i = 1; i < currentPath.length; i++) {
+      fullPath += currentPath[i].name + "/";
+    }
+    fullPath += filename;
+    window.open(fullPath, '_blank');
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+  function escapeJs(str) {
+    return str.replace(/'/g, "\\'");
+  }
+
+  displayCurrentFolder();
 </script>
-<script async defer src="https://accounts.google.com/gsi/client" onload="gapiLoaded()"></script>
 </body>
 </html>
