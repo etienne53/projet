@@ -45,6 +45,10 @@
     .breadcrumb span:hover {
       text-decoration: underline;
     }
+    /* Centrage des éléments de la grille */
+    #content {
+      justify-content: center;
+    }
     @media (max-width: 768px) {
       .col-md-2 { width: 45%; margin: 0 auto; }
       .folder, .file { font-size: 0.8rem; }
@@ -75,7 +79,7 @@
 </footer>
 
 <script>
-  // ==================== ARBORESCENCE UNIQUEMENT Chants et Psaume ====================
+  // ==================== ARBORESCENCE ====================
   const tree = {
     name: "racine",
     type: "folder",
