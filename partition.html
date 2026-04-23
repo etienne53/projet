@@ -66,7 +66,7 @@
 <div class="container">
   <h1>📚 Partitions classées</h1>
   <div id="breadcrumb" class="breadcrumb">📁 Racine</div>
-  <div id="content" class="row g-3 justify-content-center"></div> <!-- AJOUT DE justify-content-center -->
+  <div id="content" class="row g-3 justify-content-center"></div>
   <p class="text-muted mt-4">📌 Les fichiers PDF sont à placer dans le dossier <code>/partitions/</code> de ce dépôt. Cliquez sur un dossier pour naviguer.</p>
 </div>
 
@@ -75,7 +75,7 @@
 </footer>
 
 <script>
-  // ==================== ARBORESCENCE ====================
+  // ==================== ARBORESCENCE AVEC MESSE À LA RACINE ====================
   const tree = {
     name: "racine",
     type: "folder",
@@ -150,16 +150,6 @@
           { name: "J", type: "folder", children: [] },
           { name: "K", type: "folder", children: [] },
           { name: "M", type: "folder", children: [] },
-          {
-            name: "MESSE",
-            type: "folder",
-            children: [
-              { name: "Messe de la Trinité .pdf", type: "file" },
-              { name: "Messe de Rangueil.pdf", type: "file" },
-              { name: "messe_signe_damour.pdf", type: "file" },
-              { name: "Messe-de-St-Lorenzo.pdf", type: "file" }
-            ]
-          },
           { name: "N", type: "folder", children: [] },
           { name: "O", type: "folder", children: [] },
           { name: "P", type: "folder", children: [] },
@@ -227,6 +217,16 @@
             ]
           },
           { name: "ZL", type: "folder", children: [] }
+        ]
+      },
+      {   // NOUVEAU : dossier MESSE à la racine
+        name: "MESSE",
+        type: "folder",
+        children: [
+          { name: "Messe de la Trinité .pdf", type: "file" },
+          { name: "Messe de Rangueil.pdf", type: "file" },
+          { name: "messe_signe_damour.pdf", type: "file" },
+          { name: "Messe-de-St-Lorenzo.pdf", type: "file" }
         ]
       }
     ]
